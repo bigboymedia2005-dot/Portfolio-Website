@@ -80,11 +80,19 @@
         <!-- Showreel Section -->
         <section class="showreel view-enter fade-in-up">
             <div class="container">
-                <div class="video-container card">
-                    <img src="assets/showreel_thumb.png" alt="Showreel Thumbnail" class="video-thumbnail">
-                    <button class="play-btn" aria-label="Play Showreel">
-                        <div class="play-icon"></div>
-                    </button>
+                <div class="video-container card" style="padding: 0; pointer-events: none;">
+                    <!-- Swap "YOUR_VIDEO_ID" with your actual YouTube Video ID -->
+                    <iframe 
+                        width="100%" 
+                        height="100%" 
+                        src="https://www.youtube.com/embed/PAeiPh3dhr0?autoplay=1&mute=1&loop=1&playlist=PAeiPh3dhr0&controls=0&modestbranding=1" 
+                        title="Showreel Autoplay" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen
+                        style="position: absolute; top: 0; left: 0;">
+                    </iframe>
+                    <!-- Dark overlay to maintain the premium website aesthetic -->
                     <div class="video-overlay"></div>
                 </div>
             </div>
