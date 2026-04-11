@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium Video Production | Portfolio</title>
+    <title>Kawidu Madusanka | Video Editor</title>
     <meta name="description"
         content="Strategic video editing and premium production for visionary brands and creators.">
     <!-- Google Fonts -->
@@ -17,7 +17,7 @@
 <body>
     <header class="header">
         <div class="logo">
-            <a href="#home" data-link>Edited<span class="accent">ByMe</span></a>
+            <a href="#home" data-link>Kawidu<span class="accent">Madusanka</span></a>
         </div>
         <nav class="nav">
             <ul class="nav-list">
@@ -37,21 +37,38 @@
         <!-- SPA view is injected here -->
     </main>
 
+    <!-- Global Service Modal -->
+    <div id="service-modal" class="modal" aria-hidden="true">
+        <div class="modal-overlay" data-close-modal></div>
+        <div class="modal-content card">
+            <button class="modal-close" data-close-modal>&times;</button>
+            <div class="modal-body">
+                <!-- Content injected via JS -->
+            </div>
+        </div>
+    </div>
+
     <footer class="footer">
-        <p>&copy; <span id="year"></span> EditedB. All rights reserved.</p>
+        <p>&copy; <span id="year"></span> Kawidu Madusanka. All rights reserved.</p>
     </footer>
 
     <!-- Templates for SPA views -->
     <template id="home-view">
         <section class="hero view-enter">
             <div class="hero-bg">
-                <img src="assets/hero_bg.png" alt="Cinematic video editing timeline">
+                <img src="assets/workspace_hero_bg.png" alt="Professional video editing workspace setup without humans">
             </div>
             <div class="hero-content">
-                <h1 class="headline fade-in-up">Strategic Video<br>Editing Solutions</h1>
-                <p class="hero-desc fade-in-up delay-1">Partnering with brands to deliver high-retention, cinematic visual content that drives engagement and results.</p>
-                <div class="hero-actions fade-in-up delay-2">
-                    <a href="#portfolio" class="btn btn-primary" data-link>See Capabilities</a>
+                <div class="personal-brand fade-in-up">
+                    <span class="name">Kawidu Madusanka</span>
+                    <span class="separator">|</span>
+                    <span class="role">Video Editor</span>
+                </div>
+                <h1 class="headline fade-in-up delay-1">Strategic Video<br>Editing Solutions</h1>
+                <p class="hero-desc fade-in-up delay-2">I help brands and creators turn raw footage into high-quality,
+                    engaging videos that stand out.</p>
+                <div class="hero-actions fade-in-up delay-3">
+                    <a href="#portfolio" class="btn btn-primary" data-link>View Portfolio</a>
                     <a href="#contact" class="btn btn-secondary" data-link>Start a Project</a>
                 </div>
             </div>
@@ -62,15 +79,15 @@
             <div class="container">
                 <div class="stats-grid">
                     <div class="stat-item">
-                        <h3 class="stat-number">5+</h3>
+                        <h3 class="stat-number">3+</h3>
                         <p class="stat-label">Years Experience</p>
                     </div>
                     <div class="stat-item">
-                        <h3 class="stat-number">150+</h3>
+                        <h3 class="stat-number">100+</h3>
                         <p class="stat-label">Projects Delivered</p>
                     </div>
                     <div class="stat-item">
-                        <h3 class="stat-number">50M+</h3>
+                        <h3 class="stat-number">500K+</h3>
                         <p class="stat-label">Views Generated</p>
                     </div>
                 </div>
@@ -82,15 +99,11 @@
             <div class="container">
                 <div class="video-container card" style="padding: 0; pointer-events: none;">
                     <!-- Swap "YOUR_VIDEO_ID" with your actual YouTube Video ID -->
-                    <iframe 
-                        width="100%" 
-                        height="100%" 
-                        src="https://www.youtube.com/embed/PAeiPh3dhr0?autoplay=1&mute=1&loop=1&playlist=PAeiPh3dhr0&controls=0&modestbranding=1" 
-                        title="Showreel Autoplay" 
-                        frameborder="0" 
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                        allowfullscreen
-                        style="position: absolute; top: 0; left: 0;">
+                    <iframe width="100%" height="100%"
+                        src="https://www.youtube.com/embed/PAeiPh3dhr0?autoplay=1&mute=1&loop=1&playlist=PAeiPh3dhr0&controls=0&modestbranding=1"
+                        title="Showreel Autoplay" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen style="position: absolute; top: 0; left: 0;">
                     </iframe>
                 </div>
             </div>
@@ -104,26 +117,30 @@
                     <a href="#portfolio" class="btn btn-secondary" data-link>View All Work</a>
                 </div>
                 <div class="grid portfolio-grid" style="margin-top: 3rem;">
-                    <div class="portfolio-item card">
-                        <div class="thumbnail">
-                            <img src="assets/thumb_1.png" alt="Car commercial edit">
-                            <div class="hover-overlay">
-                                <span>Watch Video</span>
+                    <a href="#project/1" class="portfolio-item-link" data-link>
+                        <div class="portfolio-item card">
+                            <div class="thumbnail">
+                                <img src="assets/thumb_1.png" alt="Car commercial edit">
+                                <div class="hover-overlay">
+                                    <span>View Project</span>
+                                </div>
                             </div>
+                            <h3>Neon Rush - Commercial</h3>
+                            <p>High-energy editing designed to convert.</p>
                         </div>
-                        <h3>Neon Rush - Commercial</h3>
-                        <p>High-energy editing designed to convert.</p>
-                    </div>
-                    <div class="portfolio-item card">
-                        <div class="thumbnail">
-                            <img src="assets/thumb_2.png" alt="Music video edit">
-                            <div class="hover-overlay">
-                                <span>Watch Video</span>
+                    </a>
+                    <a href="#project/2" class="portfolio-item-link" data-link>
+                        <div class="portfolio-item card">
+                            <div class="thumbnail">
+                                <img src="assets/thumb_2.png" alt="Music video edit">
+                                <div class="hover-overlay">
+                                    <span>View Project</span>
+                                </div>
                             </div>
+                            <h3>Echoes - Music Video</h3>
+                            <p>Immersive visual storytelling.</p>
                         </div>
-                        <h3>Echoes - Music Video</h3>
-                        <p>Immersive visual storytelling.</p>
-                    </div>
+                    </a>
                 </div>
             </div>
         </section>
@@ -134,35 +151,74 @@
             <div class="container">
                 <h2 class="section-title">Selected Works</h2>
                 <div class="grid portfolio-grid">
-                    <div class="portfolio-item card">
-                        <div class="thumbnail">
-                            <img src="assets/thumb_1.png" alt="Car commercial edit">
-                            <div class="hover-overlay">
-                                <span>Watch Video</span>
+                    <a href="#project/1" class="portfolio-item-link" data-link>
+                        <div class="portfolio-item card fade-in-up">
+                            <div class="thumbnail">
+                                <img src="assets/thumb_1.png" alt="Car commercial edit">
+                                <div class="hover-overlay">
+                                    <span>View Project</span>
+                                </div>
                             </div>
+                            <h3>Neon Rush - Car Commercial</h3>
+                            <p>Cinematic editing and color grading.</p>
                         </div>
-                        <h3>Neon Rush - Car Commercial</h3>
-                        <p>Cinematic editing and color grading.</p>
-                    </div>
-                    <div class="portfolio-item card">
-                        <div class="thumbnail">
-                            <img src="assets/thumb_2.png" alt="Music video edit">
-                            <div class="hover-overlay">
-                                <span>Watch Video</span>
+                    </a>
+                    <a href="#project/2" class="portfolio-item-link" data-link>
+                        <div class="portfolio-item card fade-in-up delay-1">
+                            <div class="thumbnail">
+                                <img src="assets/thumb_2.png" alt="Music video edit">
+                                <div class="hover-overlay">
+                                    <span>View Project</span>
+                                </div>
                             </div>
+                            <h3>Echoes - Music Video</h3>
+                            <p>Fast-paced cuts and dynamic transitions.</p>
                         </div>
-                        <h3>Echoes - Music Video</h3>
-                        <p>Fast-paced cuts and dynamic transitions.</p>
-                    </div>
-                    <div class="portfolio-item card">
-                        <div class="thumbnail">
-                            <img src="assets/hero_bg.png" alt="Documentary edit">
-                            <div class="hover-overlay">
-                                <span>Watch Video</span>
+                    </a>
+                    <a href="#project/3" class="portfolio-item-link" data-link>
+                        <div class="portfolio-item card fade-in-up delay-2">
+                            <div class="thumbnail">
+                                <img src="assets/workspace_hero_bg.png" alt="Promo edit">
+                                <div class="hover-overlay">
+                                    <span>View Project</span>
+                                </div>
                             </div>
+                            <h3>Urban Flow - Streetwear</h3>
+                            <p>Optimized 9:16 vertical social cut.</p>
                         </div>
-                        <h3>The Journey - Documentary</h3>
-                        <p>Narrative pacing and sound design.</p>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <template id="project-view">
+        <section class="project-page view-enter">
+            <div class="container">
+                <a href="#portfolio" class="btn btn-secondary back-btn" data-link>← Back to Portfolio</a>
+
+                <div class="video-container-page card fade-in-up" style="padding: 0;">
+                    <!-- iFrame injected via JS -->
+                    <iframe width="100%" height="100%" src="" title="Project Video" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen style="position: absolute; top: 0; left: 0;">
+                    </iframe>
+                </div>
+
+                <div class="video-versions fade-in-up delay-1" id="project-video-versions">
+                    <!-- Version buttons injected here -->
+                </div>
+
+                <div class="project-details fade-in-up delay-1">
+                    <h2 class="project-title section-title" style="margin-bottom:1.5rem">Project Title</h2>
+                    <p class="project-desc">Project Description</p>
+                </div>
+
+                <div class="similar-projects fade-in-up delay-2" style="margin-top: 6rem;">
+                    <h3 class="section-title left-align" style="font-size: 1.8rem; margin-bottom: 2rem;">Similar
+                        Projects</h3>
+                    <div class="grid portfolio-grid" id="similar-projects-grid">
+                        <!-- Similar projects injected via JS -->
                     </div>
                 </div>
             </div>
@@ -174,24 +230,24 @@
             <div class="container">
                 <h2 class="section-title">What I Do</h2>
                 <div class="grid services-grid">
-                    <div class="service-card card fade-in-up">
+                    <div class="service-card card fade-in-up" data-service-id="cinematic">
                         <div class="icon">🎬</div>
                         <h3>Cinematic Edits</h3>
                         <p>High-end editing for short films, cinematic trailers, and documentary style content focusing
                             on emotional storytelling.</p>
                     </div>
-                    <div class="service-card card fade-in-up delay-1">
+                    <div class="service-card card fade-in-up delay-1" data-service-id="commercials">
                         <div class="icon">🏎️</div>
                         <h3>Commercials & Promos</h3>
                         <p>Fast-paced, high-retention ads designed to convert and drive engagement for brands.</p>
                     </div>
-                    <div class="service-card card fade-in-up delay-2">
+                    <div class="service-card card fade-in-up delay-2" data-service-id="social">
                         <div class="icon">📱</div>
                         <h3>Social Media / Shorts</h3>
                         <p>Optimized vertical cuts for TikTok, Reels, and YouTube Shorts with dynamic captions and
                             hooks.</p>
                     </div>
-                    <div class="service-card card fade-in-up delay-3">
+                    <div class="service-card card fade-in-up delay-3" data-service-id="youtube">
                         <div class="icon">📺</div>
                         <h3>YouTube Videos</h3>
                         <p>Engaging long-form content editing for creators focusing on retention flow and sound design.
@@ -207,15 +263,16 @@
             <div class="container">
                 <div class="about-grid">
                     <div class="about-image card fade-in-right">
-                        <img src="assets/about_portrait.png" alt="Video Editor Portrait">
+                        <img src="assets/DP.png" alt="Video Editor Portrait">
                     </div>
                     <div class="about-text fade-in-left">
-                        <h2 class="section-title left-align">Hi, I'm Alex.</h2>
-                        <p>I specialize in crafting high-impact video content for modern brands. My approach focuses on retention, aesthetic mastery, and delivering measurable value to your audience.</p>
-                        <p>Combining seamless transitions, advanced color science, and immersive sound design, I partner with forward-thinking clients to elevate their digital presence.</p>
+                        <h2 class="section-title left-align">Hi, I'm Kawidu Madusanka.</h2>
+                        <p>I create cinematic video content for brands and creators.My focus is on clean edits,
+                            strong storytelling, and engaging visuals that keep viewers watching.</p>
+                        <p>From documentaries to social media ads, I use Premiere Pro and After Effects to deliver
+                            content that looks professional and gets results.</p>
                         <div class="skills">
                             <span class="skill-tag">Adobe Premiere Pro</span>
-                            <span class="skill-tag">DaVinci Resolve</span>
                             <span class="skill-tag">After Effects</span>
                             <span class="skill-tag">Color Grading</span>
                             <span class="skill-tag">Sound Design</span>
@@ -238,24 +295,25 @@
                         <p>Reach out if you have raw footage waiting to be transformed, or an idea that needs a creative
                             touch.</p>
                         <div class="contact-methods">
-                            <a href="mailto:hello@editedbyme.xyz" class="contact-link">📧 hello@editedbyme.xyz</a>
-                            <a href="https://wa.me/1234567890" class="contact-link" target="_blank" rel="noopener">💬
-                                WhatsApp Me</a>
+                            <a href="mailto:kawidumadusanka20059@gmail.com" class="contact-link">📧
+                                hello@kawidumadusanka.com</a>
+                            <a href="https://wa.me/94788489361" class="contact-link" target="_blank" rel="noopener">💬
+                                WhatsApp: 0788489361</a>
                         </div>
                     </div>
                     <div class="contact-form card fade-in-left delay-1">
-                        <form onsubmit="event.preventDefault(); alert('Message sent successfully!');">
+                        <form action="https://formspree.io/f/xlgoqvlz" method="POST">
                             <div class="form-group">
                                 <label for="name">Name</label>
-                                <input type="text" id="name" required placeholder="John Doe">
+                                <input type="text" id="name" name="name" required placeholder="John Doe">
                             </div>
                             <div class="form-group">
                                 <label for="email">Email</label>
-                                <input type="email" id="email" required placeholder="john@example.com">
+                                <input type="email" id="email" name="email" required placeholder="john@example.com">
                             </div>
                             <div class="form-group">
                                 <label for="message">Message</label>
-                                <textarea id="message" rows="5" required
+                                <textarea id="message" name="message" rows="5" required
                                     placeholder="Tell me about your project..."></textarea>
                             </div>
                             <button type="submit" class="btn btn-primary w-full">Send Message</button>
