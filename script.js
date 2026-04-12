@@ -37,21 +37,21 @@ document.addEventListener('DOMContentLoaded', () => {
             thumb: 'assets/thumb_1.png'
         },
         '2': {
-            title: 'Echoes - Music Video',
-            description: 'Immersive visual storytelling. A blend of narrative pacing and rhythmic cuts to match the emotional beats of the track.',
+            title: 'Viral Shorts Editing',
+            description: 'A collection of high-retention short-form edits using fast cuts, subtitles, and dynamic pacing to keep viewers engaged and improve watch time across social platforms.',
             videos: [
-                { label: 'Version 1', src: 'https://www.youtube.com/embed/PAeiPh3dhr0?autoplay=0&mute=0&controls=1' },
-                { label: 'Version 2 (Director Cut)', src: 'https://www.youtube.com/embed/ScMzIvxBSi4?autoplay=0&mute=0&controls=1' }
+                { label: 'Edit 1', src: 'https://www.youtube.com/shorts/AOwFqAW4wm8' },
+                { label: 'Edit 2', src: 'https://www.youtube.com/watch?v=Lsfnb61ilR0' }
             ],
             isVertical: true,
             thumb: 'assets/thumb_2.png'
         },
         '3': {
-            title: 'Urban Flow - Streetwear Promo',
-            description: 'Optimized vertical cuts for TikTok, Reels, and YouTube Shorts. Dynamic hook, fast transitions, and high-retention format designed specifically for modern social media consumption.',
+            title: 'Podcast Editing',
+            description: 'A collection of podcast edits focused on clean cuts, subtitles, and smooth pacing to maintain viewer attention and deliver a professional viewing experience across long-form and short-form content.',
             videos: [
-                { label: 'Version 1', src: 'https://www.youtube.com/embed/PAeiPh3dhr0?autoplay=0&mute=0&controls=1' },
-                { label: 'Version 2 (Faster Pace)', src: 'https://www.youtube.com/embed/ScMzIvxBSi4?autoplay=0&mute=0&controls=1' }
+                { label: 'Primary Edits', src: 'https://www.youtube.com/watch?v=-zWY9wXCrK0' },
+                { label: 'Other Edits', src: 'https://www.youtube.com/shorts/rRqSJM165-Q' }
             ],
             isVertical: true,
             thumb: 'assets/workspace_hero_bg.png'
