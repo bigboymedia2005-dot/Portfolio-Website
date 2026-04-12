@@ -170,6 +170,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    const getSrcDoc = (src) => {
+        const videoIdMatch = src.match(/\/embed\/([^?]+)/);
+        if (!videoIdMatch) return '';
+        const videoId = videoIdMatch[1];
+        let autoplaySrc = src;
+        if (autoplaySrc.includes('autoplay=0')) {
+            autoplaySrc = autoplaySrc.replace('autoplay=0', 'autoplay=1');
+        } else if (!autoplaySrc.includes('autoplay=1')) {
+            autoplaySrc += (autoplaySrc.includes('?') ? '&' : '?') + 'autoplay=1';
+        }
+        return `<style>*{padding:0;margin:0;overflow:hidden}html,body{height:100%;background:#000;}img{position:absolute;width:100%;top:0;bottom:0;margin:auto;object-fit:cover;}.play{position:absolute;width:80px;height:80px;left:50%;top:50%;transform:translate(-50%,-50%);background:rgba(255,0,0,0.9);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:transform 0.2s ease,background 0.2s ease;}.play svg{width:40px;height:40px;fill:white;margin-left:5px;}a:hover .play{transform:translate(-50%,-50%) scale(1.1);background:red;}</style><a href="${autoplaySrc}"><img src="https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg" onerror="this.src='https://i.ytimg.com/vi/${videoId}/hqdefault.jpg'" alt="Play Video"><div class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></a>`;
+    };
+
     const injectTemplate = (template, data = null) => {
         appContainer.innerHTML = '';
         const clone = template.content.cloneNode(true);
@@ -186,6 +199,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (iframeEl && data.videos && data.videos.length > 0) {
                 iframeEl.src = data.videos[0].src;
+                iframeEl.srcdoc = getSrcDoc(data.videos[0].src);
                 iframeEl.style.transition = 'opacity 0.3s ease';
 
                 if (data.videos.length > 1 && versionsContainer) {
@@ -201,6 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             iframeEl.style.opacity = '0';
                             setTimeout(() => {
                                 iframeEl.src = vid.src;
+                                iframeEl.srcdoc = getSrcDoc(vid.src);
                                 setTimeout(() => {
                                     iframeEl.style.opacity = '1';
                                 }, 200); // give it a moment to load before fading in
