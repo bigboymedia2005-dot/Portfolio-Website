@@ -10,12 +10,39 @@ document.addEventListener('DOMContentLoaded', () => {
     // Automatically set the current year in footer
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // --- Header Scroll Effect ---
+    // --- Global Scroll & Parallax Effect ---
+    let isTicking = false;
+
+    const updateParallax = () => {
+        const parallaxEls = document.querySelectorAll('.hero-bg img, .about-image img');
+        if (!parallaxEls.length) return;
+
+        const windowHeight = window.innerHeight;
+        parallaxEls.forEach(el => {
+            const rect = el.getBoundingClientRect();
+            if (rect.top <= windowHeight && rect.bottom >= 0) {
+                const elemCenter = rect.top + rect.height / 2;
+                const windowCenter = windowHeight / 2;
+                const distanceFromCenter = elemCenter - windowCenter;
+                const yOffset = distanceFromCenter * 0.05;
+                el.style.setProperty('--parallax-y', `${yOffset}px`);
+            }
+        });
+    };
+
     window.addEventListener('scroll', () => {
         if (window.scrollY > 50) {
             header.classList.add('scrolled');
         } else {
             header.classList.remove('scrolled');
+        }
+
+        if (!isTicking) {
+            window.requestAnimationFrame(() => {
+                updateParallax();
+                isTicking = false;
+            });
+            isTicking = true;
         }
     });
 
@@ -44,64 +71,64 @@ document.addEventListener('DOMContentLoaded', () => {
                 { label: 'Edit 2', src: 'https://www.youtube.com/embed/Lsfnb61ilR0' }
             ],
             isVertical: true,
-            thumb: 'assets/thumb_2.jpg'
+            thumb: 'assets/3TH.jpg'
         },
         '3': {
             title: 'Podcast Editing',
             description: 'A collection of podcast edits focused on clean cuts, subtitles, and smooth pacing to maintain viewer attention and deliver a professional viewing experience across long-form and short-form content.',
             videos: [
-                { label: 'Primary Edits', src: 'https://www.youtube.com/embed/-zWY9wXCrK0' },
+                { label: 'Primary Edits', src: 'https://www.youtube.com/embed/OuyFYODX8-4' },
                 { label: 'Other Edits', src: 'https://www.youtube.com/embed/rRqSJM165-Q' }
             ],
             isVertical: true,
-            thumb: 'assets/workspace_hero_bg.jpg'
+            thumb: 'assets/2TH.jpg'
         }
     };
 
     // --- Services Data ---
     const servicesData = {
-        'cinematic': {
-            icon: '🎬',
-            title: 'Cinematic Edits',
-            description: 'High-end editing for short films, cinematic trailers, and documentary style content focusing on emotional storytelling.',
+        'saas': {
+            icon: '💻',
+            title: 'SaaS Ads & UI Animation',
+            description: 'High-converting SaaS ad videos and UI animations designed to clearly showcase product features, improve user understanding, and drive engagement and conversions.',
             features: [
-                'Narrative-driven storytelling flow',
-                'Advanced color grading (film emulation)',
-                'Immersive sound design and Foley mixing',
-                'Seamless, motivated transitions'
+                'Product-focused storytelling and UI walkthroughs',
+                'Smooth UI animations and motion graphics',
+                'Clean transitions and modern visual style',
+                'Optimized pacing for ads and landing pages'
             ]
         },
-        'commercials': {
-            icon: '🏎️',
-            title: 'Commercials & Promos',
-            description: 'Fast-paced, high-retention ads designed to convert and drive engagement for brands.',
-            features: [
-                'Fast-paced, high retention structuring',
-                'Brand-compliant visual assets and text animations',
-                'Dynamic speed ramping',
-                'Audio sweetening and licensed music sourcing'
-            ]
-        },
-        'social': {
+        'shorts': {
             icon: '📱',
-            title: 'Social Media / Shorts',
-            description: 'Optimized vertical cuts for TikTok, Reels, and YouTube Shorts with dynamic captions and hooks.',
+            title: 'Viral Shorts Editing',
+            description: 'Fast-paced short-form edits designed to capture attention instantly and maximize viewer retention across social platforms.',
             features: [
-                'Hook-optimized formatting (TikTok, Reels, Shorts)',
-                'Engaging, branded dynamic captions',
-                'Vertical 9:16 framing mastery',
-                'Fast-turnaround scaling and trend-jacking'
+                'Strong hooks within the first seconds',
+                'Dynamic cuts, zooms, and transitions',
+                'Engaging subtitles and captions',
+                'Optimized pacing for TikTok, Reels, and Shorts'
+            ]
+        },
+        'podcast': {
+            icon: '🎙️',
+            title: 'Podcast Editing',
+            description: 'Clean and professional podcast edits focused on clarity, smooth flow, and maintaining audience attention across long and short formats.',
+            features: [
+                'Clean cuts and natural conversation flow',
+                'Subtitles for short-form clips',
+                'Audio balancing and clarity enhancement',
+                'Distraction-free, professional finish'
             ]
         },
         'youtube': {
             icon: '📺',
-            title: 'YouTube Videos',
-            description: 'Engaging long-form content editing for creators focusing on retention flow and sound design.',
+            title: 'YouTube Long-Form Editing',
+            description: 'Structured long-form video editing focused on storytelling, pacing, and keeping viewers engaged throughout the entire video.',
             features: [
-                'Viewer retention graph optimization',
-                'A-roll / B-roll management and cleanup',
-                'Lower thirds, sound effects, and pop-ins',
-                'Multi-cam syncing and pacing'
+                'Story-driven editing and pacing',
+                'Retention-focused cuts and structure',
+                'Clean visuals and sound design',
+                'Optimized flow for audience engagement'
             ]
         }
     };
@@ -233,8 +260,8 @@ document.addEventListener('DOMContentLoaded', () => {
                                 setVideo(vid.src);
                                 setTimeout(() => {
                                     iframeEl.style.opacity = '1';
-                                }, data.isVertical ? 450 : 200); 
-                            }, 300); 
+                                }, data.isVertical ? 450 : 200);
+                            }, 300);
                         });
 
                         versionsContainer.appendChild(btn);
@@ -280,6 +307,34 @@ document.addEventListener('DOMContentLoaded', () => {
         initScrollAnimations();
     }
 
+    const initServiceCardEffects = () => {
+        if (window.matchMedia("(hover: none) and (pointer: coarse)").matches) return;
+
+        document.querySelectorAll('.service-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+
+                const rotateX = ((y - centerY) / centerY) * -5;
+                const rotateY = ((x - centerX) / centerX) * 5;
+
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+                card.style.setProperty('--rotate-x', `${rotateX}deg`);
+                card.style.setProperty('--rotate-y', `${rotateY}deg`);
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.setProperty('--rotate-x', `0deg`);
+                card.style.setProperty('--rotate-y', `0deg`);
+            });
+        });
+    };
+
     const initScrollAnimations = () => {
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -294,6 +349,9 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.fade-in-up, .fade-in-left, .fade-in-right').forEach(el => {
             observer.observe(el);
         });
+
+        initServiceCardEffects();
+        updateParallax();
     };
 
     // Handle hash change
