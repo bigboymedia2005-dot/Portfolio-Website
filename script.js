@@ -198,8 +198,24 @@ document.addEventListener('DOMContentLoaded', () => {
             if (descEl) descEl.textContent = data.description;
 
             if (iframeEl && data.videos && data.videos.length > 0) {
-                iframeEl.src = data.videos[0].src;
-                iframeEl.srcdoc = getSrcDoc(data.videos[0].src);
+                const setVideo = (vidStr) => {
+                    if (data.isVertical) {
+                        iframeEl.removeAttribute('srcdoc');
+                        let autoSrc = vidStr;
+                        if (autoSrc.includes('autoplay=0')) {
+                            autoSrc = autoSrc.replace('autoplay=0', 'autoplay=1');
+                        } else if (!autoSrc.includes('autoplay=1')) {
+                            autoSrc += (autoSrc.includes('?') ? '&' : '?') + 'autoplay=1';
+                        }
+                        if (!autoSrc.includes('rel=0')) autoSrc += '&rel=0';
+                        iframeEl.src = autoSrc;
+                    } else {
+                        iframeEl.src = vidStr;
+                        iframeEl.srcdoc = getSrcDoc(vidStr);
+                    }
+                };
+
+                setVideo(data.videos[0].src);
                 iframeEl.style.transition = 'opacity 0.3s ease';
 
                 if (data.videos.length > 1 && versionsContainer) {
@@ -214,12 +230,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
                             iframeEl.style.opacity = '0';
                             setTimeout(() => {
-                                iframeEl.src = vid.src;
-                                iframeEl.srcdoc = getSrcDoc(vid.src);
+                                setVideo(vid.src);
                                 setTimeout(() => {
                                     iframeEl.style.opacity = '1';
-                                }, 200); // give it a moment to load before fading in
-                            }, 300); // 300ms fade out
+                                }, data.isVertical ? 450 : 200); 
+                            }, 300); 
                         });
 
                         versionsContainer.appendChild(btn);
