@@ -31,27 +31,27 @@ document.addEventListener('DOMContentLoaded', () => {
             title: 'Food Delivery App – SaaS Ad',
             description: 'This project focuses on creating a clean and modern product ad using UI animation smooth transitions and clear visual hierarchy to effectively showcase the app experience and drive user engagement.',
             videos: [
-                { label: 'Director Cut', src: 'https://www.youtube.com/embed/11U91p2QU8c?autoplay=1&mute=0&controls=1' }
+                { label: 'Director Cut', src: 'https://www.youtube.com/embed/11U91p2QU8c?autoplay=0&mute=0&controls=1' }
             ],
             isVertical: false,
             thumb: 'assets/thumb_1.png'
         },
         '2': {
-            title: 'Echoes - Music Video',
-            description: 'Immersive visual storytelling. A blend of narrative pacing and rhythmic cuts to match the emotional beats of the track.',
+            title: 'Viral Shorts Editing',
+            description: 'A collection of high-retention short-form edits using fast cuts, subtitles, and dynamic pacing to keep viewers engaged and improve watch time across social platforms.',
             videos: [
-                { label: 'Version 1', src: 'https://www.youtube.com/embed/PAeiPh3dhr0?autoplay=0&mute=0&controls=1' },
-                { label: 'Version 2 (Director Cut)', src: 'https://www.youtube.com/embed/ScMzIvxBSi4?autoplay=0&mute=0&controls=1' }
+                { label: 'Edit 1', src: 'https://www.youtube.com/shorts/AOwFqAW4wm8' },
+                { label: 'Edit 2', src: 'https://www.youtube.com/watch?v=Lsfnb61ilR0' }
             ],
             isVertical: true,
             thumb: 'assets/thumb_2.png'
         },
         '3': {
-            title: 'Urban Flow - Streetwear Promo',
-            description: 'Optimized vertical cuts for TikTok, Reels, and YouTube Shorts. Dynamic hook, fast transitions, and high-retention format designed specifically for modern social media consumption.',
+            title: 'Podcast Editing',
+            description: 'A collection of podcast edits focused on clean cuts, subtitles, and smooth pacing to maintain viewer attention and deliver a professional viewing experience across long-form and short-form content.',
             videos: [
-                { label: 'Version 1', src: 'https://www.youtube.com/embed/PAeiPh3dhr0?autoplay=0&mute=0&controls=1' },
-                { label: 'Version 2 (Faster Pace)', src: 'https://www.youtube.com/embed/ScMzIvxBSi4?autoplay=0&mute=0&controls=1' }
+                { label: 'Primary Edits', src: 'https://www.youtube.com/watch?v=-zWY9wXCrK0' },
+                { label: 'Other Edits', src: 'https://www.youtube.com/shorts/rRqSJM165-Q' }
             ],
             isVertical: true,
             thumb: 'assets/workspace_hero_bg.png'
@@ -170,6 +170,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    const getSrcDoc = (src) => {
+        const videoIdMatch = src.match(/\/embed\/([^?]+)/);
+        if (!videoIdMatch) return '';
+        const videoId = videoIdMatch[1];
+        let autoplaySrc = src;
+        if (autoplaySrc.includes('autoplay=0')) {
+            autoplaySrc = autoplaySrc.replace('autoplay=0', 'autoplay=1');
+        } else if (!autoplaySrc.includes('autoplay=1')) {
+            autoplaySrc += (autoplaySrc.includes('?') ? '&' : '?') + 'autoplay=1';
+        }
+        return `<style>*{padding:0;margin:0;overflow:hidden}html,body{height:100%;background:#000;}img{position:absolute;width:100%;top:0;bottom:0;margin:auto;object-fit:cover;}.play-btn{position:absolute;width:80px;height:80px;left:50%;top:50%;transform:translate(-50%,-50%);background:rgba(255,255,255,0.1);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);border:1px solid rgba(255,255,255,0.3);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:all 0.4s cubic-bezier(0.16,1,0.3,1);}.play-icon{width:0;height:0;border-top:12px solid transparent;border-bottom:12px solid transparent;border-left:18px solid #ffffff;margin-left:6px;transition:transform 0.4s cubic-bezier(0.16,1,0.3,1);}a{display:block;width:100%;height:100%;}a:hover .play-btn{transform:translate(-50%,-50%) scale(1.1);background:rgba(255,255,255,0.2);}</style><a href="${autoplaySrc}"><img src="https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg" onerror="this.src='https://i.ytimg.com/vi/${videoId}/hqdefault.jpg'" alt="Play Video"><div class="play-btn"><div class="play-icon"></div></div></a>`;
+    };
+
     const injectTemplate = (template, data = null) => {
         appContainer.innerHTML = '';
         const clone = template.content.cloneNode(true);
@@ -186,6 +199,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (iframeEl && data.videos && data.videos.length > 0) {
                 iframeEl.src = data.videos[0].src;
+                iframeEl.srcdoc = getSrcDoc(data.videos[0].src);
                 iframeEl.style.transition = 'opacity 0.3s ease';
 
                 if (data.videos.length > 1 && versionsContainer) {
@@ -201,6 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             iframeEl.style.opacity = '0';
                             setTimeout(() => {
                                 iframeEl.src = vid.src;
+                                iframeEl.srcdoc = getSrcDoc(vid.src);
                                 setTimeout(() => {
                                     iframeEl.style.opacity = '1';
                                 }, 200); // give it a moment to load before fading in
