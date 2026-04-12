@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 { label: 'Director Cut', src: 'https://www.youtube.com/embed/11U91p2QU8c?autoplay=0&mute=0&controls=1' }
             ],
             isVertical: false,
-            thumb: 'assets/thumb_1.png'
+            thumb: 'assets/thumb_1.jpg'
         },
         '2': {
             title: 'Viral Shorts Editing',
@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 { label: 'Edit 2', src: 'https://www.youtube.com/embed/Lsfnb61ilR0' }
             ],
             isVertical: true,
-            thumb: 'assets/thumb_2.png'
+            thumb: 'assets/thumb_2.jpg'
         },
         '3': {
             title: 'Podcast Editing',
@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 { label: 'Other Edits', src: 'https://www.youtube.com/embed/rRqSJM165-Q' }
             ],
             isVertical: true,
-            thumb: 'assets/workspace_hero_bg.png'
+            thumb: 'assets/workspace_hero_bg.jpg'
         }
     };
 
