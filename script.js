@@ -40,8 +40,8 @@ document.addEventListener('DOMContentLoaded', () => {
             title: 'Viral Shorts Editing',
             description: 'A collection of high-retention short-form edits using fast cuts, subtitles, and dynamic pacing to keep viewers engaged and improve watch time across social platforms.',
             videos: [
-                { label: 'Edit 1', src: 'https://www.youtube.com/shorts/AOwFqAW4wm8' },
-                { label: 'Edit 2', src: 'https://www.youtube.com/watch?v=Lsfnb61ilR0' }
+                { label: 'Edit 1', src: 'https://www.youtube.com/embed/AOwFqAW4wm8' },
+                { label: 'Edit 2', src: 'https://www.youtube.com/embed/Lsfnb61ilR0' }
             ],
             isVertical: true,
             thumb: 'assets/thumb_2.png'
@@ -50,8 +50,8 @@ document.addEventListener('DOMContentLoaded', () => {
             title: 'Podcast Editing',
             description: 'A collection of podcast edits focused on clean cuts, subtitles, and smooth pacing to maintain viewer attention and deliver a professional viewing experience across long-form and short-form content.',
             videos: [
-                { label: 'Primary Edits', src: 'https://www.youtube.com/watch?v=-zWY9wXCrK0' },
-                { label: 'Other Edits', src: 'https://www.youtube.com/shorts/rRqSJM165-Q' }
+                { label: 'Primary Edits', src: 'https://www.youtube.com/embed/-zWY9wXCrK0' },
+                { label: 'Other Edits', src: 'https://www.youtube.com/embed/rRqSJM165-Q' }
             ],
             isVertical: true,
             thumb: 'assets/workspace_hero_bg.png'
