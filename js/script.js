@@ -1,12 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
-    
+
     // --- UI Elements ---
     const appContainer = document.getElementById('app');
     const navLinks = document.querySelectorAll('.nav-item');
     const header = document.querySelector('.header');
     const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
     const nav = document.querySelector('.nav');
-    
+
     // Automatically set the current year in footer
     document.getElementById('year').textContent = new Date().getFullYear();
 
@@ -28,10 +28,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Projects Data ---
     const projectsData = {
         '1': {
-            title: 'Neon Rush - Car Commercial',
-            description: 'High-energy editing designed to convert. Fast-paced cinematic cuts with dynamic speed ramping and color grading tailored for automotive brands.',
+            title: 'Food Delivery App – SaaS Ad',
+            description: 'This project focuses on creating a clean and modern product ad using UI animation smooth transitions and clear visual hierarchy to effectively showcase the app experience and drive user engagement.',
             videos: [
-                { label: 'Director Cut', src: 'https://www.youtube.com/embed/PAeiPh3dhr0?autoplay=0&mute=0&controls=1' }
+                { label: 'Director Cut', src: 'https://www.youtube.com/embed/11U91p2QU8c?autoplay=1&mute=0&controls=1' }
             ],
             isVertical: false,
             thumb: 'assets/thumb_1.png'
@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
     // --- SPA Hash Router ---
-    
+
     const routes = {
         '': 'home-view',
         '#home': 'home-view',
@@ -118,17 +118,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const renderHash = () => {
         let hash = window.location.hash;
-        
+
         let templateId = routes[hash] || 'home-view';
         let isProjectRoute = hash.startsWith('#project/');
         let projectId = null;
         let projectData = null;
-        
+
         if (isProjectRoute) {
             templateId = 'project-view';
             projectId = hash.split('/')[1];
             projectData = projectsData[projectId];
-            
+
             if (!projectData) {
                 // Invalid project ID
                 appContainer.innerHTML = '<h2>404 - Project Not Found</h2>';
@@ -162,7 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 link.classList.add('active');
             }
         });
-        
+
         // Close mobile menu if open
         if (nav.classList.contains('open')) {
             nav.classList.remove('open');
@@ -173,31 +173,31 @@ document.addEventListener('DOMContentLoaded', () => {
     const injectTemplate = (template, data = null) => {
         appContainer.innerHTML = '';
         const clone = template.content.cloneNode(true);
-        
+
         if (data) {
             const titleEl = clone.querySelector('.project-title');
             const descEl = clone.querySelector('.project-desc');
             const iframeEl = clone.querySelector('iframe');
             const videoContainer = clone.querySelector('.video-container-page');
             const versionsContainer = clone.querySelector('#project-video-versions');
-            
+
             if (titleEl) titleEl.textContent = data.title;
             if (descEl) descEl.textContent = data.description;
-            
+
             if (iframeEl && data.videos && data.videos.length > 0) {
                 iframeEl.src = data.videos[0].src;
                 iframeEl.style.transition = 'opacity 0.3s ease';
-                
+
                 if (data.videos.length > 1 && versionsContainer) {
                     data.videos.forEach((vid, idx) => {
                         const btn = document.createElement('button');
                         btn.className = `version-btn ${idx === 0 ? 'active' : ''}`;
                         btn.textContent = vid.label;
-                        
+
                         btn.addEventListener('click', (e) => {
                             versionsContainer.querySelectorAll('.version-btn').forEach(b => b.classList.remove('active'));
                             btn.classList.add('active');
-                            
+
                             iframeEl.style.opacity = '0';
                             setTimeout(() => {
                                 iframeEl.src = vid.src;
@@ -206,12 +206,12 @@ document.addEventListener('DOMContentLoaded', () => {
                                 }, 200); // give it a moment to load before fading in
                             }, 300); // 300ms fade out
                         });
-                        
+
                         versionsContainer.appendChild(btn);
                     });
                 }
             }
-            
+
             videoContainer.classList.remove('video-vertical');
             if (data.isVertical && videoContainer) {
                 videoContainer.classList.add('video-vertical');
@@ -253,7 +253,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const initScrollAnimations = () => {
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if(entry.isIntersecting) {
+                if (entry.isIntersecting) {
                     entry.target.classList.add('is-visible');
                     // Stop observing once animated
                     observer.unobserve(entry.target);
