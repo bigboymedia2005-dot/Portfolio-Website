@@ -140,7 +140,8 @@ document.addEventListener('DOMContentLoaded', () => {
         '#portfolio': 'portfolio-view',
         '#services': 'services-view',
         '#about': 'about-view',
-        '#contact': 'contact-view'
+        '#contact': 'contact-view',
+        '#client-portal': 'client-portal-view'
     };
 
     const renderHash = () => {

@@ -17,6 +17,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="preload" href="assets/workspace_hero_bg.jpg" as="image">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/png" href="assets/Tab.png">
+    <link rel="apple-touch-icon" href="assets/Tab.png">
 </head>
 
 <body>
@@ -31,6 +33,7 @@
                 <li><a href="#services" class="nav-item" data-link>Services</a></li>
                 <li><a href="#about" class="nav-item" data-link>About</a></li>
                 <li><a href="#contact" class="nav-item" data-link>Contact</a></li>
+                <li><a href="#client-portal" class="nav-item" data-link>Client Portal</a></li>
             </ul>
         </nav>
         <div class="mobile-menu-btn">
@@ -325,6 +328,31 @@
                             <button type="submit" class="btn btn-primary w-full">Send Message</button>
                         </form>
                     </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <template id="client-portal-view">
+        <section class="client-portal view-enter" style="min-height: 75vh; display: flex; align-items: center;">
+            <div class="container" style="display: flex; justify-content: center; width: 100%;">
+                <div class="card fade-in-up" style="max-width: 500px; width: 100%;">
+                    <div style="text-align: center; margin-bottom: 2rem;">
+                        <h2 class="section-title" style="margin-bottom: 0.5rem; text-align: center;">Client Portal</h2>
+                        <p style="color: var(--text-secondary, #a0a0a0);">Access your project dashboard</p>
+                    </div>
+                    
+                    <form onsubmit="event.preventDefault();">
+                        <div class="form-group">
+                            <label for="client-id">Client ID</label>
+                            <input type="text" id="client-id" name="client-id" required placeholder="Enter your Client ID">
+                        </div>
+                        <div class="form-group">
+                            <label for="access-code">Access Code</label>
+                            <input type="password" id="access-code" name="access-code" required placeholder="Enter your Access Code">
+                        </div>
+                        <button type="submit" class="btn btn-primary w-full" style="margin-top: 1rem;">Access Dashboard</button>
+                    </form>
                 </div>
             </div>
         </section>
