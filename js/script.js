@@ -404,6 +404,30 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.target.closest('[data-close-modal]')) {
             closeModal();
         }
+
+        // Client Portal Login
+        const loginBtn = e.target.closest('.client-portal .btn-primary');
+        if (loginBtn) {
+            e.preventDefault();
+            const clientIdInput = document.getElementById('client-id');
+            const accessCodeInput = document.getElementById('access-code');
+            const errorEl = document.getElementById('portal-error');
+            
+            if (clientIdInput && accessCodeInput) {
+                const clientId = clientIdInput.value.trim();
+                const accessCode = accessCodeInput.value.trim();
+
+                if (clientId === 'PLI-2026' && accessCode === 'Platinum Interiors') {
+                    if (errorEl) errorEl.style.display = 'none';
+                    window.location.href = 'https://www.notion.so/Client-Portal-e08a2a7bbac947a0b39ca201e10f95c5?source=copy_link';
+                } else {
+                    if (errorEl) {
+                        errorEl.textContent = 'Invalid Client ID or Access Code';
+                        errorEl.style.display = 'block';
+                    }
+                }
+            }
+        }
     });
 
     // Close on ESC
