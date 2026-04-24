@@ -8,7 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const nav = document.querySelector('.nav');
 
     // Automatically set the current year in footer
-    document.getElementById('year').textContent = new Date().getFullYear();
+    const yearEl = document.getElementById('year');
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
 
     // --- Global Scroll & Parallax Effect ---
     let isTicking = false;
@@ -31,9 +32,9 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
+        if (header && window.scrollY > 50) {
             header.classList.add('scrolled');
-        } else {
+        } else if (header) {
             header.classList.remove('scrolled');
         }
 
@@ -47,10 +48,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --- Mobile Menu Toggle ---
-    mobileMenuBtn.addEventListener('click', () => {
-        nav.classList.toggle('open');
-        mobileMenuBtn.classList.toggle('open');
-    });
+    if (mobileMenuBtn && nav) {
+        mobileMenuBtn.addEventListener('click', () => {
+            nav.classList.toggle('open');
+            mobileMenuBtn.classList.toggle('open');
+        });
+    }
 
     // --- Projects Data ---
     const projectsData = {
@@ -144,7 +147,10 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const renderHash = () => {
-        if (document.body.classList.contains('standalone-page')) return;
+        if (document.body.classList.contains('standalone-page')) {
+            initScrollAnimations();
+            return;
+        }
         let hash = window.location.hash;
 
         let templateId = routes[hash] || 'home-view';
@@ -171,6 +177,8 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
+        if (!appContainer) return;
+        
         // Animate out the old view if modifying
         const currentView = appContainer.firstElementChild;
         if (currentView) {
@@ -192,9 +200,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         // Close mobile menu if open
-        if (nav.classList.contains('open')) {
+        if (nav && nav.classList.contains('open')) {
             nav.classList.remove('open');
-            mobileMenuBtn.classList.remove('open');
+            if (mobileMenuBtn) mobileMenuBtn.classList.remove('open');
         }
     };
 
@@ -212,6 +220,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const injectTemplate = (template, data = null) => {
+        if (!appContainer) return;
         appContainer.innerHTML = '';
         const clone = template.content.cloneNode(true);
 
@@ -365,11 +374,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Modal Logic ---
     const modal = document.getElementById('service-modal');
-    const modalBody = modal.querySelector('.modal-body');
+    const modalBody = modal ? modal.querySelector('.modal-body') : null;
 
     const openServiceModal = (id) => {
         const data = servicesData[id];
-        if (!data) return;
+        if (!data || !modal || !modalBody) return;
 
         let featuresHtml = data.features.map(f => `<li>${f}</li>`).join('');
 
@@ -388,76 +397,120 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const closeModal = () => {
-        modal.classList.remove('open');
+        if (modal) modal.classList.remove('open');
         document.body.classList.remove('no-scroll');
     };
 
-    // Global click delegate for dynamic elements
+    // Global click delegate for dynamic SPA elements (Service Cards)
     document.addEventListener('click', (e) => {
-        // Open modal
         const serviceCard = e.target.closest('.service-card[data-service-id]');
         if (serviceCard) {
             openServiceModal(serviceCard.getAttribute('data-service-id'));
         }
 
-        // Close modal via overlay or X
         if (e.target.closest('[data-close-modal]')) {
             closeModal();
         }
-        
-        // Toggle Password Visibility
-        const toggleBtn = e.target.closest('#toggle-password');
-        if (toggleBtn) {
-            const input = document.getElementById('access-code');
-            const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
-            input.setAttribute('type', type);
+    });
+
+    // --- Client Portal Specific Logic (Direct Listeners) ---
+    const clientIdInput = document.getElementById('client-id');
+    const accessCodeInput = document.getElementById('access-code');
+    const toggleBtn = document.getElementById('toggle-password');
+    const loginButton = document.getElementById('login-button');
+    const errorEl = document.getElementById('portal-error');
+
+    // Multi-Client Registry
+    const clients = {
+        "PLI-2026": {
+            code: "Platinum Interiors",
+            link: "https://www.notion.so/Client-Portal-e08a2a7bbac947a0b39ca201e10f95c5?source=copy_link"
+        }
+        // Future clients can be added here
+    };
+
+    // Persistence: Auto-fill Client ID from localStorage
+    if (clientIdInput) {
+        const savedID = localStorage.getItem("clientID");
+        if (savedID && clients[savedID]) {
+            clientIdInput.value = savedID;
             
-            // Toggle Icon
+            /* 
+            // OPTION B: Auto-redirect user to their dashboard
+            window.location.href = clients[savedID].link;
+            */
+        }
+    }
+
+    // Password Visibility Toggle
+    if (toggleBtn && accessCodeInput) {
+        toggleBtn.addEventListener('click', () => {
+            const type = accessCodeInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            accessCodeInput.setAttribute('type', type);
+            
             if (type === 'text') {
-                toggleBtn.innerHTML = `
-                    <svg class="eye-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                        <circle cx="12" cy="12" r="3"></circle>
-                    </svg>
-                `;
-            } else {
+                // Show Eye-Slash icon
                 toggleBtn.innerHTML = `
                     <svg class="eye-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
                         <line x1="1" y1="1" x2="23" y2="23"></line>
                     </svg>
                 `;
+            } else {
+                // Show Eye icon
+                toggleBtn.innerHTML = `
+                    <svg class="eye-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                        <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                `;
             }
-        }
+        });
+    }
 
-        // Client Portal Login
-        const loginBtn = e.target.closest('.client-portal .btn-primary');
-        if (loginBtn) {
-            e.preventDefault();
-            const clientIdInput = document.getElementById('client-id');
-            const accessCodeInput = document.getElementById('access-code');
-            const errorEl = document.getElementById('portal-error');
-            
-            if (clientIdInput && accessCodeInput) {
-                const clientId = clientIdInput.value.trim();
-                const accessCode = accessCodeInput.value.trim();
+    // Login Validation Logic
+    if (loginButton && clientIdInput && accessCodeInput) {
+        const performLogin = () => {
+            const id = clientIdInput.value.trim();
+            const code = accessCodeInput.value.trim();
 
-                if (clientId === 'PLI-2026' && accessCode === 'Platinum Interiors') {
-                    if (errorEl) errorEl.style.display = 'none';
-                    window.location.href = 'https://www.notion.so/Client-Portal-e08a2a7bbac947a0b39ca201e10f95c5?source=copy_link';
-                } else {
-                    if (errorEl) {
-                        errorEl.textContent = 'Invalid Client ID or Access Code';
-                        errorEl.style.display = 'block';
-                    }
+            if (clients[id] && clients[id].code === code) {
+                if (errorEl) errorEl.style.display = 'none';
+                
+                // UX: Loading state
+                loginButton.disabled = true;
+                loginButton.textContent = "Accessing...";
+                
+                // Save Client ID for persistence
+                localStorage.setItem("clientID", id);
+                
+                // Redirect to client-specific link
+                window.location.href = clients[id].link;
+            } else {
+                if (errorEl) {
+                    errorEl.textContent = 'Invalid Client ID or Access Code';
+                    errorEl.style.display = 'block';
                 }
             }
-        }
-    });
+        };
 
-    // Close on ESC
+        loginButton.addEventListener('click', performLogin);
+
+        // Support Enter key for login
+        [clientIdInput, accessCodeInput].forEach(input => {
+            input.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') performLogin();
+            });
+            // Reset error message when user starts typing
+            input.addEventListener('input', () => {
+                if (errorEl) errorEl.style.display = 'none';
+            });
+        });
+    }
+
+    // Close Modal on ESC
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && modal.classList.contains('open')) {
+        if (e.key === 'Escape' && modal && modal.classList.contains('open')) {
             closeModal();
         }
     });
