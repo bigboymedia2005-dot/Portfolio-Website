@@ -140,11 +140,11 @@ document.addEventListener('DOMContentLoaded', () => {
         '#portfolio': 'portfolio-view',
         '#services': 'services-view',
         '#about': 'about-view',
-        '#contact': 'contact-view',
-        '#client-portal': 'client-portal-view'
+        '#contact': 'contact-view'
     };
 
     const renderHash = () => {
+        if (document.body.classList.contains('standalone-page')) return;
         let hash = window.location.hash;
 
         let templateId = routes[hash] || 'home-view';
