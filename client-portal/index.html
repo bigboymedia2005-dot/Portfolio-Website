@@ -91,6 +91,112 @@
     </footer>
 
     <script src="../js/script.js"></script>
+
+    <!-- Firebase Integration -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js';
+        import { getFirestore, doc, getDoc } from 'https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js';
+
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCvvIVljELWWa1mNwNlWeLhuMkiN85_Mzw",
+            authDomain: "client-portal-20df1.firebaseapp.com",
+            projectId: "client-portal-20df1"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // UI Elements
+        const loginButton = document.getElementById('login-button');
+        const clientIdInput = document.getElementById('client-id');
+        const accessCodeInput = document.getElementById('access-code');
+        const errorEl = document.getElementById('portal-error');
+
+        /**
+         * Validates credentials against Firestore and redirects on success.
+         */
+        async function handleLogin() {
+            const clientId = clientIdInput.value.trim();
+            const accessCode = accessCodeInput.value.trim();
+
+            if (!clientId || !accessCode) {
+                showError("Please enter both Client ID and Access Code");
+                return;
+            }
+
+            // UI Feedback: Disable button during validation
+            loginButton.disabled = true;
+            const originalText = loginButton.textContent;
+            loginButton.textContent = "Validating...";
+            errorEl.style.display = 'none';
+
+            try {
+                // Fetch client document from 'clients' collection
+                const docRef = doc(db, "clients", clientId);
+                const docSnap = await getDoc(docRef);
+
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    
+                    // Check if access code matches
+                    if (data.code === accessCode) {
+                        if (data.notionLink) {
+                            // Success! Redirect to Notion link
+                            window.location.href = data.notionLink;
+                        } else {
+                            showError("Configuration error: No link found for this client.");
+                            resetButton();
+                        }
+                    } else {
+                        showError("Invalid Client ID or Access Code");
+                        resetButton();
+                    }
+                } else {
+                    // Document does not exist
+                    showError("Invalid Client ID or Access Code");
+                    resetButton();
+                }
+            } catch (error) {
+                console.error("Firestore Error:", error);
+                showError("Connection error. Please check your internet and try again.");
+                resetButton();
+            }
+
+            function resetButton() {
+                loginButton.disabled = false;
+                loginButton.textContent = originalText;
+            }
+        }
+
+        /**
+         * Displays error message in the designated error container.
+         */
+        function showError(message) {
+            if (errorEl) {
+                errorEl.textContent = message;
+                errorEl.style.display = 'block';
+            }
+        }
+
+        // Event Listeners
+        if (loginButton) {
+            loginButton.addEventListener('click', handleLogin);
+        }
+
+        // Support 'Enter' key and clear errors on input
+        [clientIdInput, accessCodeInput].forEach(input => {
+            if (input) {
+                input.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') handleLogin();
+                });
+                input.addEventListener('input', () => {
+                    if (errorEl) errorEl.style.display = 'none';
+                });
+            }
+        });
+    </script>
 </body>
 
 </html>

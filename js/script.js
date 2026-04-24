@@ -413,36 +413,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- Client Portal Specific Logic (Direct Listeners) ---
-    const clientIdInput = document.getElementById('client-id');
+    // --- Client Portal Specific Logic (Password Toggle) ---
     const accessCodeInput = document.getElementById('access-code');
     const toggleBtn = document.getElementById('toggle-password');
-    const loginButton = document.getElementById('login-button');
-    const errorEl = document.getElementById('portal-error');
 
-    // Multi-Client Registry
-    const clients = {
-        "PLI-2026": {
-            code: "Platinum Interiors",
-            link: "https://www.notion.so/Client-Portal-e08a2a7bbac947a0b39ca201e10f95c5?source=copy_link"
-        }
-        // Future clients can be added here
-    };
-
-    // Persistence: Auto-fill Client ID from localStorage
-    if (clientIdInput) {
-        const savedID = localStorage.getItem("clientID");
-        if (savedID && clients[savedID]) {
-            clientIdInput.value = savedID;
-            
-            /* 
-            // OPTION B: Auto-redirect user to their dashboard
-            window.location.href = clients[savedID].link;
-            */
-        }
-    }
-
-    // Password Visibility Toggle
     if (toggleBtn && accessCodeInput) {
         toggleBtn.addEventListener('click', () => {
             const type = accessCodeInput.getAttribute('type') === 'password' ? 'text' : 'password';
@@ -465,46 +439,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     </svg>
                 `;
             }
-        });
-    }
-
-    // Login Validation Logic
-    if (loginButton && clientIdInput && accessCodeInput) {
-        const performLogin = () => {
-            const id = clientIdInput.value.trim();
-            const code = accessCodeInput.value.trim();
-
-            if (clients[id] && clients[id].code === code) {
-                if (errorEl) errorEl.style.display = 'none';
-                
-                // UX: Loading state
-                loginButton.disabled = true;
-                loginButton.textContent = "Accessing...";
-                
-                // Save Client ID for persistence
-                localStorage.setItem("clientID", id);
-                
-                // Redirect to client-specific link
-                window.location.href = clients[id].link;
-            } else {
-                if (errorEl) {
-                    errorEl.textContent = 'Invalid Client ID or Access Code';
-                    errorEl.style.display = 'block';
-                }
-            }
-        };
-
-        loginButton.addEventListener('click', performLogin);
-
-        // Support Enter key for login
-        [clientIdInput, accessCodeInput].forEach(input => {
-            input.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') performLogin();
-            });
-            // Reset error message when user starts typing
-            input.addEventListener('input', () => {
-                if (errorEl) errorEl.style.display = 'none';
-            });
         });
     }
 
